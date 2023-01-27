@@ -3,4 +3,9 @@
 <h1> <%= postTitle %> </h1>
 <p> <%= postBody %> </p>
 
+<% const previousId = postId-1 %> 
+<% const nextId = postId+1 %> 
+<a class="btn btn-primary" href="/post?id=<%= previousId %> ">Previous</a>
+<a class="btn btn-primary" href="/post?id=<%= nextId %> ">Next</a>
+
 <%- include ("partials/footer") -%>  

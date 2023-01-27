@@ -13,26 +13,26 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 
 
 // =============== EVENT MANAGERS ===============
 
-app.get("/", function (req, res){
-  res.render("home", {homeContent: content.HOME_CONTENT, posts: content.posts});
+app.get("/", function (req, res) {
+  res.render("home", { homeContent: content.HOME_CONTENT, posts: content.posts });
 });
 
 app.get("/about", function (req, res) {
-  res.render("about", {aboutContent: content.ABOUT_CONTENT});
+  res.render("about", { aboutContent: content.ABOUT_CONTENT });
 });
 
-app.get("/contact", function(req, res){
-  res.render("contact", {contactContent: content.CONTACT_CONTENT});
+app.get("/contact", function (req, res) {
+  res.render("contact", { contactContent: content.CONTACT_CONTENT });
 });
 
-app.get("/compose", function(req,res){
+app.get("/compose", function (req, res) {
   res.render("compose");
 });
 
@@ -41,21 +41,29 @@ app.post("/compose", function (req, res) {
   res.redirect("/");
 });
 
-app.get("/:postTitle", function (req, res) {
-  const post = content.getPostByTitle(req.params.postTitle);
+app.get("/posts", function (req, res) {
+  let post;
+
+  if (req.query.id !== undefined) {
+    post = content.getPostById(Number(req.query.id));
+  } else if (req.query.title !== undefined) {
+    post = content.getPostByTitle(req.query.title);
+  }
+
   if (post !== undefined) {
-  res.render("post", {postTitle: post.title, postBody: post.body});
-    
+    res.render("post", { postId: post.id, postTitle: post.title, postBody: post.body });
+
   } else {
-  res.render("post-not-found");
+    res.render("post-not-found");
   }
 });
 
 
 
 
+
 // ================ PORT LISTENERS ================
 
-app.listen(3000, function() {
+app.listen(3000, function () {
   console.log("Server started on port 3000");
 });
