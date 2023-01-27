@@ -6,7 +6,6 @@ const ejs = require("ejs");
 const content = require(__dirname + "/content.js");
 
 
-
 // ============= CONFIG EXPRESS APP =============
 
 const app = express();
