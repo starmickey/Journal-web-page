@@ -1,5 +1,6 @@
 <%- include ("partials/header") -%>
-<h1>Home</h1>
+
+<h1 id="mainTitle">Home</h1>
 <p><%= homeContent %> </p>
 
 <% posts.forEach(post => { %>
@@ -16,6 +17,29 @@
 <% }) %>
 
 
-<a class="btn btn-primary " href="/compose">New Post</a>
+<!-- <a class="btn btn-primary" href="/compose">New Post</a> -->
 
+<button class="btn btn-primary" id="composePostButton">New Post</button>
+
+<div id="composeSection" style="display: none;">
+  <%- include ("partials/compose-block") -%>
+</div>
+
+<script>
+  var btn = document.getElementById("composePostButton");
+  var composeSection = document.getElementById("composeSection");
+  var composeTitle = document.getElementById("composeSectionTitle");
+
+
+  btn.addEventListener("click", function() {
+    if (composeSection.style.display !== "none") {
+      composeSection.style.display = "none";
+    } else {
+      composeSection.style.display = "block";
+      composeSection.scrollIntoView();
+      composeTitle.focus();
+      btn.textContent = "Hide compose section";
+    }
+  });
+</script>
 <%- include ("partials/footer") -%>
